@@ -9,8 +9,15 @@ using System.Threading.Tasks;
 
 namespace dal.Data
 {
-    internal class AddDbContext : DbContext
+    public class AppDbContext : DbContext
+
+
     {
+
+        public AppDbContext(DbContextOptions<AppDbContext> options):base(options) 
+        {
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server= . ; Database=MvcProject; Trusted_Connection=True; MultipleActiveResultSets=True");

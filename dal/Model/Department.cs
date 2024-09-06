@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace dal.Model
 {
-    internal class Department
+    public class Department
     {
         public int Id { get; set; }
 
