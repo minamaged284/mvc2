@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using bll.Interfaces;
-using bll.Reposatories;
+using bll.Repositories;
 
 
 namespace mvc2
