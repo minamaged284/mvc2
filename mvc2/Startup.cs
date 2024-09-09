@@ -1,19 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using dal.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using bll.Interfaces;
-using bll.Reposatories;
+using bll.Repositories;
 
 
 namespace mvc2
@@ -32,7 +25,7 @@ namespace mvc2
         {
             services.AddControllersWithViews();
             services.AddDbContext<AppDbContext>(option =>option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IDepartmentReposatory,DepartmentReposatory>(); 
+            services.AddScoped<IDepartmentRepository,DepartmentRepository>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

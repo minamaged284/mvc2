@@ -1,39 +1,36 @@
 ﻿using bll.Interfaces;
 using dal.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using dal.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace bll.Reposatories
+namespace bll.Repositories
 {
-    public class DepartmentReposatory : IDepartmentReposatory
+    public class DepartmentRepository : IDepartmentRepository
     {
 
-        private readonly AppDbContext _DbContext;
+        private  AppDbContext _DbContext;
 
-        public DepartmentReposatory(AppDbContext dbContext)
+        public DepartmentRepository(AppDbContext dbContext)
         {
-            
+            _DbContext = dbContext;
         }
         public int Add(Department department)
         {
-            _DbContext.Add(department);
+            _DbContext.Department.Add(department);
             return _DbContext.SaveChanges();
         }
 
         public int Delete(Department department)
         {
-            _DbContext.Remove(department);
+            _DbContext.Department.Remove(department);
             return _DbContext.SaveChanges();
         }
 
         public List<Department> GetAll()
         {
-           return _DbContext.Department.AsNoTracking().ToList();
+            return _DbContext.Department.AsNoTracking().ToList();
         }
 
         public Department GetById(int id)
@@ -43,7 +40,7 @@ namespace bll.Reposatories
 
         public int Update(Department department)
         {
-            _DbContext.Update(department);
+            _DbContext.Department.Update(department);
             return _DbContext.SaveChanges();
         }
     }

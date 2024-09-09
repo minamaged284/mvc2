@@ -1,11 +1,6 @@
 ﻿using dal.Configurations;
 using dal.Model;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace dal.Data
 {
@@ -22,7 +17,7 @@ namespace dal.Data
         {
             optionsBuilder.UseSqlServer("Server= . ; Database=MvcProject; Trusted_Connection=True; MultipleActiveResultSets=True");
         }
-
+         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration<Department>(new DepartmentConfiguration());
