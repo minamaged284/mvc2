@@ -1,0 +1,54 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1 class="text-center">
+    Update Department
+</h1>
+
+<form asp-action="Update" class="my-4">
+
+
+    <div class="w-75 bg-light rounded p-4 shadow-sm m-auto my-5">
+
+
+        <div class="my-2">
+            <label asp-for="Code">
+            </label>
+            <input type="text" asp-for="Code" class="form-control w-100" />
+
+            <span asp-validation-for="Code" class="text-danger"></span>
+        </div>
+
+        <div class="my-2">
+            <label asp-for="Name">
+            </label>
+            <input type="text" asp-for="Name" class="form-control w-100" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+
+        </div>
+
+        <div class="my-2">
+            <label asp-for="DateOfCreation">
+            </label>
+            <input asp-for="DateOfCreation" class="form-control w-100" />
+        </div>
+    </div>
+    <div class="text-center my-3 ">
+
+        <input type="submit" class="btn btn-outline-primary" />
+        <a asp-action="Index" class="btn btn-outline-info "> Return to index</a>
+
+    </div>
+
+
+
+
+
+
+
+
+
+</form>
+

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace dal
+﻿namespace dal
 {
     public class Class1
     {
