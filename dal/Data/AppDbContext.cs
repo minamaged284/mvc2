@@ -23,6 +23,7 @@ namespace dal.Data
             modelBuilder.ApplyConfiguration<Department>(new DepartmentConfiguration());
             modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
         }
-        public DbSet<Department> Department { get; set; } 
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Employee> Employees { get; set; }
     }
 }
