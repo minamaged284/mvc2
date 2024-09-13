@@ -1,17 +1,18 @@
-﻿@model Department
+﻿@model Employee
 @{
     ViewData["Title"] = "Update";
 }
 
 <h1 class="text-center">
-    Update Department
+    Update Employee
 </h1>
 
 <form asp-action="Update" class="my-4">
 
+    <partial name="Partial/CreateUpdatePartial" >
 
-    <partial name="Partial/CreateUpdatePartial">
-
+    </partial>
+   
     <div class="text-center my-3 ">
 
         <input type="submit" class="btn btn-outline-primary" />

@@ -3,9 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace dal.Model
 {
-    public class Department
+    public class Department:ModelBase
     {
-        public int Id { get; set; }
 
         [Required(ErrorMessage ="code is required")]
         public string Code { get; set; }
