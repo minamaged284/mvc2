@@ -29,9 +29,8 @@ namespace dal.Model
         [EnumMember(Value = "PartTime")] 
         PartTime=2
     }
-    public class Employee
+    public class Employee : ModelBase
     {
-        public int Id { get; set; }
 
         [Required(ErrorMessage ="Name is required!")]
         [MaxLength(50,ErrorMessage ="Max length for name is 50" )]
@@ -43,15 +42,16 @@ namespace dal.Model
 
         public int Age { get; set; }
 
-        [RegularExpression(@"^[0-9]{1-3}-[a-zA-Z]{5-10}-[a-zA-Z]{4-10}-[a-zA-Z]{5-10}",ErrorMessage ="Address should be like 123-street-city-country ")]
+        [RegularExpression(@"^[0-9]{1,3}-[a-zA-Z]{5,10}-[a-zA-Z]{4,10}-[a-zA-Z]{5,10}",ErrorMessage ="Address should be like 123-street-city-country ")]
 
         public string  Address { get; set; }
 
         [DataType(DataType.Currency)]
-        public decimal Salary { get; set; }
+        public decimal? Salary { get; set; }
 
+        [Display(Name="Is Active")]
         public bool IsActive { get; set; }
-        [EmailAddress]
+        [EmailAddress(ErrorMessage ="Please enter a valid email address")]
         public string Email { get; set; }
 
         [Phone]
@@ -59,10 +59,11 @@ namespace dal.Model
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Hire Date")]
-        public DateTime HireFate { get; set; }
-        public bool IsDeleted { get; set; }
+        public DateTime HireDate { get; set; }
+        public bool? IsDeleted { get; set; }
 
-        public Gender Gender { get; set; }
-        public EmployeeType EmployeeType { get; set; }
+        
+        public Gender? Gender { get; set; }
+        public EmployeeType? EmployeeType { get; set; }
     }
 }

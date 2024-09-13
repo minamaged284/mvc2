@@ -1,0 +1,61 @@
+﻿@model Employee
+
+<div class="w-75 bg-light rounded p-4 shadow-sm m-auto my-5">
+
+
+    <div class="my-2">
+        <label asp-for="Name">
+        </label>
+        <input type="text" asp-for="Name" class="form-control w-100" readonly />
+
+
+    </div>
+
+    <div class="my-2">
+        <label asp-for="Age">
+        </label>
+        <input asp-for="Age" class="form-control w-100" readonly />
+
+
+    </div>
+
+    <div class="my-2">
+        <label asp-for="Address">
+        </label>
+        <input asp-for="Address" class="form-control w-100" readonly />
+
+
+    </div>
+
+    <div class="my-2">
+        <label asp-for="Salary">
+        </label>
+        <input asp-for="Salary" class="form-control w-100" readonly />
+
+    </div>
+
+
+    <div class="my-2">
+        <label asp-for="IsActive" class="psosition position-static d-block">
+        </label>
+
+        <input asp-for="IsActive" type="checkbox" class=" form-check-input mt-0 position-static m-auto" readonly disabled />
+
+    </div>
+
+    <div class="my-2">
+        <label asp-for="Gender">
+        </label>
+        <input asp-for="Gender" class="form-control w-100" readonly />
+
+
+    </div>
+
+    <div class="my-2">
+        <label asp-for="Email">
+        </label>
+        <input asp-for="Email" class="form-control w-100" readonly />
+
+
+    </div>
+</div>

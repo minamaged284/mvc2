@@ -1,0 +1,21 @@
+﻿@model int
+
+<td class="p-2">
+    <a asp-action="Details" asp-route-id="@Model" class="btn btn-outline-success">
+        <i class="fa-regular fa-eye"></i> Details
+    </a>
+
+
+</td class="p-2">
+<td>
+    <a asp-action="Update" asp-route-id="@Model" class="btn btn-outline-warning">
+        <i class="fa-solid fa-pen-to-square"></i> Update
+    </a>
+</td>
+
+<td class="p-2">
+    <a asp-action="Delete" asp-route-id="@Model" class="btn btn-outline-danger">
+        <i class="fa-solid fa-trash"></i> Delete
+    </a>
+</td>
+

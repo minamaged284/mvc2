@@ -1,0 +1,132 @@
+﻿@model IEnumerable<Employee>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All Employees</h1>
+
+@if (TempData["Message"]!=null)
+{
+    <div class="alert-primary w-75 m-auto rounded p-5">
+        @TempData["Message"]
+    </div>
+}
+
+
+<a asp-controller="Employee" asp-action="Create" class="btn btn-outline-primary my-3">
+    Create New Employee
+</a>
+
+<div class="m-auto w-100">
+
+
+    @if(Model.Count()>0){
+    <table class="w-100 table-striped table-hover p-4 text-center">
+
+        
+    <tr class="p-4">
+        <th>
+            @Html.DisplayNameFor(e=>e.Name)
+        </th>
+
+            <th>
+                @Html.DisplayNameFor(e =>e.Age)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(e => e.Address)
+            </th>
+
+
+                <th>
+                    @Html.DisplayNameFor(e => e.Salary)
+                </th>
+
+
+                <th>
+                    @Html.DisplayNameFor(e => e.IsActive)
+                </th>
+
+
+                <th>
+                    @Html.DisplayNameFor(e => e.Gender)
+                </th>
+
+
+                <th>
+                    @Html.DisplayNameFor(e => e.Email)
+                </th>
+
+
+
+
+            <th>
+                Details 
+            </th>
+            <th>
+                Update
+            </th>
+            <th>
+                Delete
+            </th>
+    </tr>
+
+            @foreach(var employee in Model)
+            {
+                <tr class="p-4">
+                    <td>
+                        @employee.Name
+                    </td>
+
+                    <td>
+                        @employee.Age
+                    </td>
+
+                    <td>
+                        @employee.Address
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(m => employee.Salary)
+
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(m=>employee.IsActive)
+
+                    </td>
+
+                    <td>
+                        @employee.Gender
+                    </td>
+
+
+                    <td>
+                        @Html.DisplayFor(m=>employee.Email)
+                    </td>
+
+                    <partial name="buttonsIndexPartial" model="employee.Id">
+
+                    </partial>
+                    
+
+               
+                </tr>
+            }
+
+
+
+</table>
+    }
+
+    else{
+        <div class="mb-auto alert-dark ">
+                <h3 class="text-center p-4">
+                    There are no employees
+                </h3>
+        </div>
+    }
+
+
+</div>
+

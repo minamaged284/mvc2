@@ -15,7 +15,7 @@ namespace dal.Configurations
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
             //builder.Property(e=>e.Gender).HasConversion(gender=>gender.ToString(),genderDb=>Enum.Parse<Gender>(genderDb));
-            builder.Property(e => e.Gender).HasConversion(gender => gender.ToString(), genderDb =>(Gender) Enum.Parse(typeof(Gender),genderDb));
+            builder.Property(e => e.Gender).HasConversion(gender => gender.ToString(), genderDb =>(Gender)Enum.Parse(typeof(Gender),genderDb));
 
             //builder.Property(e=>e.EmployeeType).HasConversion(employeeType=>employeeType.ToString(),employeeTypeDb=>Enum.Parse<EmployeeType>(employeeTypeDb));
             builder.Property(e => e.EmployeeType).HasConversion(employeeType => employeeType.ToString(), employeeTypeDb => (EmployeeType)Enum.Parse(typeof(EmployeeType), employeeTypeDb));
