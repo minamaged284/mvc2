@@ -1,7 +1,14 @@
-﻿@model IEnumerable<Employee>
+﻿
+@model IEnumerable<Employee>
 @{
     ViewData["Title"] = "Index";
+
 }
+@inject IDepartmentRepository _departments;
+@{
+    var departments = new SelectList(_departments.GetAll(), nameof(Department.Id), nameof(Department.Name));
+}
+
 
 <h1>All Employees</h1>
 
@@ -57,6 +64,10 @@
                     @Html.DisplayNameFor(e => e.Email)
                 </th>
 
+                <th>
+                    @Html.DisplayNameFor(e => e.Department)
+                </th>
+
 
 
 
@@ -103,6 +114,10 @@
 
                     <td>
                         @Html.DisplayFor(m=>employee.Email)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(m => employee.DepartmentId)
                     </td>
 
                     <partial name="buttonsIndexPartial" model="employee.Id">

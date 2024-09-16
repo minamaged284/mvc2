@@ -9,6 +9,7 @@ namespace dal.Configurations
         public void Configure(EntityTypeBuilder<Department> builder)
         {
             builder.Property(p=>p.Id).UseIdentityColumn(10,10);
+            builder.HasMany(p => p.Employees).WithOne(p => p.Department).OnDelete(DeleteBehavior.Cascade);
             
         }
     }

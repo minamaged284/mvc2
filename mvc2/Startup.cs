@@ -7,6 +7,7 @@ using dal.Data;
 using Microsoft.EntityFrameworkCore;
 using bll.Interfaces;
 using bll.Repositories;
+using mvc2.Extensions;
 
 
 namespace mvc2
@@ -25,8 +26,7 @@ namespace mvc2
         {
             services.AddControllersWithViews();
             services.AddDbContext<AppDbContext>(option =>option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IDepartmentRepository,DepartmentRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddApplicationServices();
 
         }
 
