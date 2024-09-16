@@ -65,5 +65,9 @@ namespace dal.Model
         
         public Gender? Gender { get; set; }
         public EmployeeType? EmployeeType { get; set; }
+
+        public Department Department { get; set; }
+        public int? DepartmentId { get; set; }
+
     }
 }
