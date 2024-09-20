@@ -1,9 +1,12 @@
-﻿using bll.Interfaces;
+﻿using AutoMapper;
+using bll.Interfaces;
 using dal.Model;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using mvc2.ViewModels;
 using System;
+using System.Collections.Generic;
 
 namespace mvc2.Controllers
 {
@@ -11,17 +14,33 @@ namespace mvc2.Controllers
     {
         private readonly IEmployeeRepository repo;
         private readonly IWebHostEnvironment env;
+        private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeRepository Repo,IWebHostEnvironment env)
+        public EmployeeController(IEmployeeRepository Repo,IWebHostEnvironment env,IMapper mapper)
         {
             repo = Repo;
             this.env = env;
+            _mapper = mapper;
         }
-        public IActionResult Index()
+        public IActionResult Index(string searchInput)
         {
-            TempData.Keep();
-            var employees = repo.GetAll();
-            return View(employees);
+            if (string.IsNullOrEmpty(searchInput))
+            {
+
+                TempData.Keep();
+                var employees = repo.GetAll();
+                var mappedEmp = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
+
+                return View(mappedEmp);
+            }
+            else
+            {
+                var employees = repo.GetEmployeeByName(searchInput);
+                var mappedEmp = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
+
+                return View(mappedEmp);
+            }
+
         }
 
         public IActionResult Create()
@@ -30,11 +49,16 @@ namespace mvc2.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Employee employee)
+        public IActionResult Create(EmployeeViewModel employee)
         {
+
+
             if (ModelState.IsValid)
             {
-                int count = repo.Add(employee);
+                var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employee);
+
+
+                int count = repo.Add(mappedEmployee);
                 if (count > 0)
                 {
                     TempData["Message"] = "Employee created successfully";
@@ -56,12 +80,14 @@ namespace mvc2.Controllers
             else
             {
                 var employee=repo.GetById(id.Value);
+                var mappedEmployee = _mapper.Map<Employee, EmployeeViewModel>(employee);
 
-                if (employee == null)
+
+                if (mappedEmployee == null)
                 {
                     return NotFound();
                 }
-                return View(viewName,employee);
+                return View(viewName, mappedEmployee);
             }
             
         }
@@ -76,7 +102,7 @@ namespace mvc2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update([FromRoute] int id , Employee employee)
+        public IActionResult Update([FromRoute] int id , EmployeeViewModel employee)
         {
             if (id != employee.Id)
             {
@@ -86,7 +112,9 @@ namespace mvc2.Controllers
             {
                 try
                 {
-                     repo.Update(employee);
+                    var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employee);
+
+                    repo.Update(mappedEmployee);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
@@ -120,11 +148,13 @@ namespace mvc2.Controllers
 
         [HttpPost]
 
-        public IActionResult Delete(Employee employee)
+        public IActionResult Delete(EmployeeViewModel employee)
         {
             try
             {
-                repo.Delete(employee);
+                var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employee);
+
+                repo.Delete(mappedEmployee);
 
                 return RedirectToAction(nameof(Index));
 
