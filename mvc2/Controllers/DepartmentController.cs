@@ -5,6 +5,10 @@ using dal.Model;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using Microsoft.Extensions.Hosting;
+using AutoMapper;
+using System.Collections;
+using mvc2.ViewModels;
+using System.Collections.Generic;
 
 
 namespace mvc2.Controllers
@@ -14,16 +18,21 @@ namespace mvc2.Controllers
     {
         private readonly IDepartmentRepository repo;
         private readonly IWebHostEnvironment env;
+        private readonly IMapper _mapper;
 
-        public DepartmentController(IDepartmentRepository repo,IWebHostEnvironment env)
+        public DepartmentController(IDepartmentRepository repo,IWebHostEnvironment env,IMapper mapper)
         {
             this.repo = repo;
             this.env = env;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
             var department = repo.GetAll();
-            return View(department);
+            var mappedDepartment = _mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentViewModel>>(department);
+
+
+            return View(mappedDepartment);
         }
 
         public IActionResult Create()
@@ -33,11 +42,12 @@ namespace mvc2.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Department department)
+        public IActionResult Create(DepartmentViewModel department)
         {
             if (ModelState.IsValid)
             {
-                int count = repo.Add(department);
+                var mappedDepartment=_mapper.Map<DepartmentViewModel,Department>(department);
+                int count = repo.Add(mappedDepartment);
                 if (count > 0)
                 {
 
@@ -61,14 +71,16 @@ namespace mvc2.Controllers
             else
             {
                 var department = repo.GetById(id.Value);
-                if (department == null)
+                var mappedDepartment = _mapper.Map<Department, DepartmentViewModel>(department);
+
+                if (mappedDepartment == null)
                 {
                     return NotFound();
                 }
 
                 else
                 {
-                    return View(department);
+                    return View(mappedDepartment);
                 }
             }
             
@@ -103,7 +115,7 @@ namespace mvc2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update([FromRoute]int id,Department department)
+        public IActionResult Update([FromRoute]int id,DepartmentViewModel department)
         {
             if (id != department.Id)
             {
@@ -114,7 +126,9 @@ namespace mvc2.Controllers
 
                 try
                 {
-                    repo.Update(department);
+                    var mappedDepartment = _mapper.Map<DepartmentViewModel, Department>(department);
+
+                    repo.Update(mappedDepartment);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
@@ -145,11 +159,13 @@ namespace mvc2.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Department department)
+        public IActionResult Delete(DepartmentViewModel department)
         {
             try
             {
-                repo.Delete(department);
+                var mappedDepartment = _mapper.Map<DepartmentViewModel, Department>(department);
+
+                repo.Delete(mappedDepartment);
                     
                 return RedirectToAction(nameof(Index));
                 

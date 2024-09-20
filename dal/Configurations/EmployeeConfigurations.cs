@@ -21,6 +21,8 @@ namespace dal.Configurations
             builder.Property(e => e.EmployeeType).HasConversion(employeeType => employeeType.ToString(), employeeTypeDb => (EmployeeType)Enum.Parse(typeof(EmployeeType), employeeTypeDb));
 
             builder.Property(e => e.Salary).HasColumnType("decimal(18,2)");
+
+            builder.Property(e => e.Name).IsRequired(true).HasMaxLength(50);
         }
     }
 }

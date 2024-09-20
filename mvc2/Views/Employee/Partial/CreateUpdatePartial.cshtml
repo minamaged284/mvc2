@@ -1,4 +1,4 @@
-﻿@model Employee
+﻿@model EmployeeViewModel
 
 @inject IDepartmentRepository _departments;
 @{
@@ -51,8 +51,10 @@
     <div class="my-2">
         <label asp-for="Gender">
         </label>
-        <input asp-for="Gender" class="form-control w-100" />
         <span asp-validation-for="Gender" class="text-danger"></span>
+        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control">
+    <option value="@null">-- Select Gender</option>
+</select>
 
     </div>
 
@@ -69,11 +71,12 @@
 
         <select class="form-control" asp-for="DepartmentId" asp-items="@departments">
 
-            <option value="null">
+            <option value="@null">
                 -- Select Department
 
             </option>
         </select>
+        <span asp-validation-for="DepartmentId" class="text-danger"></span>
 
     </div>
 </div>

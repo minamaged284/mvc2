@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using bll.Interfaces;
 using bll.Repositories;
 using mvc2.Extensions;
+using mvc2.Helpers;
+
 
 
 namespace mvc2
@@ -27,6 +29,7 @@ namespace mvc2
             services.AddControllersWithViews();
             services.AddDbContext<AppDbContext>(option =>option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddApplicationServices();
+            services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
 
         }
 
