@@ -16,19 +16,19 @@ namespace mvc2.Controllers
 
     public class DepartmentController : Controller
     {
-        private readonly IDepartmentRepository repo;
+        private readonly IUnitOfWork _UnitOfWork;
         private readonly IWebHostEnvironment env;
         private readonly IMapper _mapper;
 
-        public DepartmentController(IDepartmentRepository repo,IWebHostEnvironment env,IMapper mapper)
+        public DepartmentController(IUnitOfWork UnitOfWork,IWebHostEnvironment env,IMapper mapper)
         {
-            this.repo = repo;
+            this._UnitOfWork = UnitOfWork;
             this.env = env;
             _mapper = mapper;
         }
         public IActionResult Index()
         {
-            var department = repo.GetAll();
+            var department = _UnitOfWork.DepartmentRepository.GetAll();
             var mappedDepartment = _mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentViewModel>>(department);
 
 
@@ -47,7 +47,8 @@ namespace mvc2.Controllers
             if (ModelState.IsValid)
             {
                 var mappedDepartment=_mapper.Map<DepartmentViewModel,Department>(department);
-                int count = repo.Add(mappedDepartment);
+                 _UnitOfWork.DepartmentRepository.Add(mappedDepartment);
+                int count = _UnitOfWork.complete();
                 if (count > 0)
                 {
 
@@ -70,7 +71,7 @@ namespace mvc2.Controllers
             }
             else
             {
-                var department = repo.GetById(id.Value);
+                var department = _UnitOfWork.DepartmentRepository.GetById(id.Value);
                 var mappedDepartment = _mapper.Map<Department, DepartmentViewModel>(department);
 
                 if (mappedDepartment == null)
@@ -97,7 +98,7 @@ namespace mvc2.Controllers
 
             //else
             //{
-            //    var department = repo.GetById(id.Value);
+            //    var department = _UnitOfWork.GetById(id.Value);
             //    if (department == null)
             //    {
             //        return NotFound();
@@ -128,7 +129,7 @@ namespace mvc2.Controllers
                 {
                     var mappedDepartment = _mapper.Map<DepartmentViewModel, Department>(department);
 
-                    repo.Update(mappedDepartment);
+                    _UnitOfWork.DepartmentRepository.Update(mappedDepartment);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
@@ -165,7 +166,7 @@ namespace mvc2.Controllers
             {
                 var mappedDepartment = _mapper.Map<DepartmentViewModel, Department>(department);
 
-                repo.Delete(mappedDepartment);
+                _UnitOfWork.DepartmentRepository.Delete(mappedDepartment);
                     
                 return RedirectToAction(nameof(Index));
                 

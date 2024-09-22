@@ -4,9 +4,9 @@
     ViewData["Title"] = "Index";
 
 }
-@inject IDepartmentRepository _departments;
+@inject IUnitOfWork _UnitOfWork;
 @{
-    var departments = new SelectList(_departments.GetAll(), nameof(Department.Id), nameof(Department.Name));
+    var departments = new SelectList(_UnitOfWork.DepartmentRepository.GetAll(), nameof(Department.Id), nameof(Department.Name));
 }
 
 

@@ -19,16 +19,16 @@ namespace bll.Repositories
         {
             _DbContext = DbContext;
         }
-        public int Add(T item)
+        public void Add(T item)
         {
            _DbContext.Set<T>().Add(item);
-            return _DbContext.SaveChanges();
+            //return _DbContext.SaveChanges();
         }
 
-        public int Delete(T item)
+        public void Delete(T item)
         {
             _DbContext.Set<T>().Remove(item);
-            return _DbContext.SaveChanges();
+            //return _DbContext.SaveChanges();
         }
 
         public T GetById(int id)
@@ -45,10 +45,10 @@ namespace bll.Repositories
             return _DbContext.Set<T>().ToList();
         }
 
-        public int Update(T item)
+        public void Update(T item)
         {
             _DbContext.Set<T>().Update(item);
-            return _DbContext.SaveChanges();
+            //return _DbContext.SaveChanges();
         }
     }
 }
