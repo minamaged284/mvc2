@@ -4,21 +4,23 @@ using dal.Model;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using mvc2.Helpers;
 using mvc2.ViewModels;
 using System;
 using System.Collections.Generic;
+
 
 namespace mvc2.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly IEmployeeRepository repo;
+        private readonly IUnitOfWork _UnitOfWork;
         private readonly IWebHostEnvironment env;
         private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeRepository Repo,IWebHostEnvironment env,IMapper mapper)
+        public EmployeeController(IUnitOfWork UnitOfWork,IWebHostEnvironment env,IMapper mapper)
         {
-            repo = Repo;
+            _UnitOfWork = UnitOfWork;
             this.env = env;
             _mapper = mapper;
         }
@@ -28,14 +30,14 @@ namespace mvc2.Controllers
             {
 
                 TempData.Keep();
-                var employees = repo.GetAll();
+                var employees = _UnitOfWork.EmployeeRepository.GetAll();
                 var mappedEmp = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
 
                 return View(mappedEmp);
             }
             else
             {
-                var employees = repo.GetEmployeeByName(searchInput);
+                var employees = _UnitOfWork.EmployeeRepository.GetEmployeeByName(searchInput);
                 var mappedEmp = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
 
                 return View(mappedEmp);
@@ -55,10 +57,11 @@ namespace mvc2.Controllers
 
             if (ModelState.IsValid)
             {
+                employee.ImageName = DocumentSettings.uploadFile(employee.Image, "Images");
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employee);
+                _UnitOfWork.EmployeeRepository.Add(mappedEmployee);
 
-
-                int count = repo.Add(mappedEmployee);
+                int count = _UnitOfWork.complete();
                 if (count > 0)
                 {
                     TempData["Message"] = "Employee created successfully";
@@ -79,7 +82,7 @@ namespace mvc2.Controllers
             }
             else
             {
-                var employee=repo.GetById(id.Value);
+                var employee=_UnitOfWork.EmployeeRepository.GetById(id.Value);
                 var mappedEmployee = _mapper.Map<Employee, EmployeeViewModel>(employee);
 
 
@@ -112,9 +115,12 @@ namespace mvc2.Controllers
             {
                 try
                 {
+                    employee.ImageName = DocumentSettings.uploadFile(employee.Image, "Images");
+
                     var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employee);
 
-                    repo.Update(mappedEmployee);
+                    _UnitOfWork.EmployeeRepository.Update(mappedEmployee);
+                    _UnitOfWork.complete();
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
@@ -154,8 +160,8 @@ namespace mvc2.Controllers
             {
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employee);
 
-                repo.Delete(mappedEmployee);
-
+                _UnitOfWork.EmployeeRepository.Delete(mappedEmployee);
+                DocumentSettings.deleteFile(employee.ImageName, "Images");
                 return RedirectToAction(nameof(Index));
 
             }

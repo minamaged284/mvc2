@@ -66,6 +66,7 @@ namespace dal.Model
 
         public Department? Department { get; set; }
         public int? DepartmentId { get; set; }
+        public string ImageName { get; set; }
 
     }
 }
