@@ -1,0 +1,133 @@
+﻿@model IEnumerable<UserViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Users</h1>
+
+
+
+
+
+<div class="w-75 d-flex justify-content-center align-items-center m-3 ">
+    <form asp-action="Index" class="w-100 text-center d-flex">
+        <input type="text" name="Email" placeholder="Search by Email" class="form-control  mx-3" />
+        <input type="submit" class="btn btn-outline-info " value="Search" />
+    </form>
+</div>
+
+
+
+
+<div class="m-auto w-100">
+
+
+    @if (Model.Count() > 0)
+    {
+        <table class="w-100 table-striped table-hover p-4 text-center">
+
+
+            <tr class="p-4">
+                <th>
+                    @Html.DisplayNameFor(e => e.Id)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(e => e.FName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(e => e.LName)
+                </th>
+
+
+                <th>
+                    @Html.DisplayNameFor(e => e.Email)
+                </th>
+
+
+                <th>
+                    @Html.DisplayNameFor(e => e.PhoneNumber)
+                </th>
+
+
+                <th>
+                    @Html.DisplayNameFor(e => e.Roles)
+                </th>
+
+
+                
+
+
+
+                <th>
+                    Details
+                </th>
+                <th>
+                    Update
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+
+            @foreach (var user in Model)
+            {
+                <tr class="p-4">
+                    <td>
+                        @user.Id
+                    </td>
+
+                    <td>
+                        @user.FName
+                    </td>
+
+                    <td>
+                        @user.LName
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(m => user.Email)
+
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(m => user.PhoneNumber)
+
+                    </td>
+
+                    <td>
+                        @user.Roles
+                    </td>
+
+
+                    
+
+                    <partial name="buttonsIndexPartial" model="user.Id">
+
+                    </partial>
+
+
+
+                </tr>
+            }
+
+
+
+        </table>
+    }
+
+    else
+    {
+        <div class="mb-auto alert-dark ">
+            <h3 class="text-center p-4">
+                There are no users
+            </h3>
+        </div>
+    }
+
+
+</div>
+

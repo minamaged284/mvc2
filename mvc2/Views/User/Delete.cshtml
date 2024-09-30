@@ -1,0 +1,33 @@
+﻿@model UserViewModel
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="my-5">
+    Are you sure you want to delete this department?
+
+</h1>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" class="my-4">
+
+
+    <partial name="Partial/DetailsDeletePartial"></partial>
+
+    <div class="text-center my-3 ">
+       
+
+        <input type="submit" value="Delete" class="btn btn-outline-danger" />
+        <a asp-action="Index" class="btn btn-outline-info "> Return to index</a>
+
+    </div>
+
+
+
+
+
+
+
+
+
+</form>
+
